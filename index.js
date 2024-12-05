@@ -26,7 +26,8 @@ async function run() {
         // Connect the client to the server	(optional starting in v4.7)
         await client.connect();
         // Send a ping to confirm a successful connection
-        const userCollection = client.db('userHub').collection('userCollection');
+        const userCollection = client.db('movie_portal_db').collection('userCollection');
+        const movieCollection = client.db('movie_portal_db').collection('movieCollection');
 
         app.get('/', (req, res) => {
             res.send('Hello Server')
@@ -42,8 +43,17 @@ async function run() {
 
         app.post('/users', async (req, res) => {
             const user = req.body;
-
             const result = await userCollection.insertOne(user)
+            res.send(result)
+        })
+
+        app.get('/movies', async (req, res) => {
+
+        })
+
+        app.post('/movies', async (req, res) => {
+            const movie = req.body;
+            const result = await movieCollection.insertOne(movie)
             res.send(result)
         })
         await client.db("admin").command({ ping: 1 });
