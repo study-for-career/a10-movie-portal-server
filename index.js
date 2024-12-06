@@ -33,6 +33,12 @@ async function run() {
             res.send('Hello Server')
         })
 
+        app.get('/movies', async (req, res) => {
+            const cursor = movieCollection.find()
+            const result = await cursor.toArray();
+            res.send(result)
+        })
+
         app.get('/users/:email', async (req, res) => {
             const email = req.params.email;
             console.log(email)
@@ -47,9 +53,7 @@ async function run() {
             res.send(result)
         })
 
-        app.get('/movies', async (req, res) => {
 
-        })
 
         app.post('/movies', async (req, res) => {
             const movie = req.body;
