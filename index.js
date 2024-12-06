@@ -36,6 +36,13 @@ async function run() {
             res.send('Hello Server')
         })
 
+        app.get('/users/:email', async (req, res) => {
+            const email = req.params.email;
+            const query = { email }
+            const result = await userCollection.findOne(query);
+            res.send(result)
+        })
+
         app.get('/movies', async (req, res) => {
             const cursor = movieCollection.find()
             const result = await cursor.toArray();
@@ -48,13 +55,14 @@ async function run() {
             res.send(result)
         })
 
-
-        app.get('/users/:email', async (req, res) => {
+        app.get('/favourite_movies/:email', async (req, res) => {
             const email = req.params.email;
             const query = { email }
-            const result = await userCollection.findOne(query);
+            const cursor = favouriteMovies.find(query);
+            const result = await cursor.toArray()
             res.send(result)
         })
+
 
         app.post('/users', async (req, res) => {
             const user = req.body;
