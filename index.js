@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors')
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const app = express()
 const port = process.env.PORT || 5000;
 
@@ -9,7 +10,7 @@ app.use(express.json())
 
 // BUy5YBTpUONGe247
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+
 const uri = "mongodb+srv://mdzahidulislambera:BUy5YBTpUONGe247@cluster0.b8foj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
@@ -38,10 +39,16 @@ async function run() {
             const result = await cursor.toArray();
             res.send(result)
         })
+        app.get('/movies/:id', async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await movieCollection.findOne(query);
+            res.send(result)
+        })
+
 
         app.get('/users/:email', async (req, res) => {
             const email = req.params.email;
-            console.log(email)
             const query = { email }
             const result = await userCollection.findOne(query);
             res.send(result)
