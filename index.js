@@ -63,6 +63,23 @@ async function run() {
             res.send(result)
         })
 
+        // Updata a movie
+        app.put('/update/:id', async (req, res) => {
+            const id = req.params.id;
+            const data = req.body
+            const query = { _id: new ObjectId(id) }
+            const options = { upsert: true };
+            const updateData = {
+                $set: {
+                    title: data.title, duration: data.duration, release: data.release,
+                    image: data.image, summary: data.summary, rating: data.rating, genre: data.genre
+                }
+            }
+
+            const result = await movieCollection.updateOne(query, updateData, options);
+            res.send(result)
+        })
+
 
         app.post('/users', async (req, res) => {
             const user = req.body;
