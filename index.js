@@ -33,7 +33,7 @@ async function run() {
         const favouriteMovies = client.db('movie_portal_db').collection('favouriteMovies');
 
         app.get('/', (req, res) => {
-            res.send('Hello Server')
+            res.send('Assignment 10. Movie Portal Server Side')
         })
 
         app.get('/users/:email', async (req, res) => {
